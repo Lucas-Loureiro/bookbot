@@ -1,5 +1,5 @@
-def count_words(text):
-  return len(text.split())
+import sys
+from stats import count_words
 
 def sort_on(dict):
   return dict["value"]
@@ -21,12 +21,16 @@ def count_same_char(text):
   list_dict = transform_list(dict)
   list_dict.sort(reverse=True, key=sort_on)
   for i in range(len(list_dict)):
-    print(f"The '{list_dict[i]["char"]}' character was found {list_dict[i]["value"]} times")
+    print(f"{list_dict[i]["char"]}: {list_dict[i]["value"]}")
   
 
 def main():
-  print("--- Begin report of books/frankenstein.txt ---")
-  with open("books/frankenstein.txt") as f:
+  if len(sys.argv) != 2:
+    print("Usage: python3 main.py <path_to_book>")
+    sys.exit(1) 
+    
+  print(f"--- Begin report of {sys.argv[1]} ---")
+  with open(sys.argv[1]) as f:
     file_contents = f.read()
   print(f"{count_words(file_contents)} words found in the document")
   count_same_char(file_contents)
